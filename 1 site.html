@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Онлайн Сайт</title>
+  <meta name="description" content="Онлайн Сайт">
+
+  <!-- ==========================
+       Настройте тут (замените)
+       ==========================
+       Замените значения внизу (в блоке <script> config):
+       shopName, productName, price, whatsappNumber.
+  -->
+  <style>
+    /* ---- Базовая стилизация (встроенный CSS для простоты) ---- */
+    :root{
+      --accent:#ff6a00;
+      --accent-dark:#e55a00;
+      --muted:#6b7280;
+      --bg:#f7f7fb;
+      --card:#ffffff;
+      --success:#16a34a;
+      --max-width:1100px;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:#111827;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url("фото2.jpg") no-repeat center center fixed;
+  background-size: cover;
+    }
+
+    .wrap{max-width:var(--max-width);margin:28px auto;padding:0 20px;}
+    header{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo svg{height:44px}
+    .nav{display:flex;gap:14px}
+    .nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    .nav a.cta{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none}
+
+    /* Hero */
+    .hero{
+      background:linear-gradient(180deg,rgba(255,255,255,0.6),transparent);
+      display:grid;
+      grid-template-columns:1fr 420px;
+      gap:28px;
+      align-items:center;
+    }
+    .hero-card{padding:28px;background:var(--card);border-radius:var(--radius);box-shadow:0 10px 30px rgba(15,23,42,0.06)}
+    .eyebrow{display:inline-block;background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:12px}
+    h1{margin:0 0 12px;font-size:28px;line-height:1.06}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+
+    .price{font-size:28px;font-weight:800;color:var(--accent);margin-top:6px}
+    .benefits{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+    .benefit{display:flex;gap:12px;align-items:flex-start;color:#374151}
+    .btns{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .btn{
+      background:var(--accent);
+      color:#fff;padding:12px 18px;border-radius:10px;border:0;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+      box-shadow:0 6px 18px rgba(101,79,40,0.12)
+    }
+    .btn.secondary{background:transparent;color:var(--accent);border:2px solid var(--accent);font-weight:700}
+    .badge{background:#fff;padding:8px;border-radius:10px;box-shadow:0 6px 16px rgba(8,15,29,0.04);display:flex;align-items:center;gap:10px}
+
+    /* Right column: product card */
+    .product{
+      padding:20px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbff);border:1px solid rgba(99,102,241,0.06);
+    }
+    .product .img{
+      height:220px;border-radius:10px;background:linear-gradient(135deg,#f3f4f6,#eef2ff);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-weight:700;color:#475569
+    }
+    .small{font-size:14px;color:var(--muted)}
+    .stock{font-weight:800;color:#dc2626}
+    .timer{display:flex;gap:8px;align-items:center;margin-top:8px}
+
+    /* Sections */
+    section{margin-top:28px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.04)}
+    .testimonials{display:flex;gap:12px;flex-direction:column}
+
+    /* Sticky bottom bar on mobile */
+    .sticky-buy{display:none;position:fixed;left:20px;right:20px;bottom:20px;background:linear-gradient(90deg,var(--accent),var(--accent-dark));color:#fff;padding:14px;border-radius:999px;box-shadow:0 18px 40px rgba(15,23,42,0.18);z-index:80;align-items:center;justify-content:space-between}
+    .sticky-buy .left{display:flex;gap:12px;align-items:center}
+    .sticky-buy button{background:transparent;border:0;color:#fff;font-weight:800;cursor:pointer;padding:8px 12px;border-radius:8px}
+
+    /* Footer */
+    footer{padding:28px 0;color:var(--muted);font-size:14px;text-align:center;margin-top:40px}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .nav{display:none}
+      .sticky-buy{display:flex}
+      .grid-3{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <!-- Встроенный SVG логотип -->
+        <svg viewBox="0 0 120 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="logo">
+          <rect width="115" height="36" rx="15" fill="#0ea5a4"/>
+          <g transform="translate(10,5)">
+            <path d="M6 2h10l2 6h-14z" fill="#fff" opacity="0.97"/>
+            <circle cx="3" cy="20" r="4" fill="#fff"/>
+            <circle cx="19" cy="20" r="4" fill="#fff"/>
+            <text x="30" y="20" font-family="Inter, Arial" font-weight="700" font-size="17" fill="#fff">Онлайн</text>
+          </g>
+        </svg>
+      </div>
+
+      <nav class="nav" aria-label="Главное меню">
+        <a href="#about">О товаре</a>
+        <a href="#reviews">Отзывы</a>
+        <a class="cta" href="#buy">Купить</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <main class="hero">
+      <div class="hero-card">
+        <span class="eyebrow">СПЕЦПРЕДЛОЖЕНИЕ</span>
+        <h1 id="title">Онлайн Сайт</h1>
+        <p class="lead" id="subtitle">Получите реальный результат уже в ближайшие дни. Бесплатная консультация и гарантия возврата 30 дней.</p>
+
+        <div>
+          <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+            <div style="font-size:13px;color:var(--muted)">Цена:</div>
+            <div class="price" id="price">PRICE</div>
+          </div>
+
+          <div class="benefits" style="margin-top:12px">
+            <div class="benefit">✅ Быстрая доставка и поддержка</div>
+            <div class="benefit">✅ 30 дней гарантия возврата</div>
+            <div class="benefit">✅ Только проверенные материалы/методы</div>
+          </div>
+
+          <div class="btns">
+            <a id="buyWhatsapp" class="btn" href="#" role="button" aria-label="Купить через WhatsApp">
+              Купить через WhatsApp
+            </a>
+            <button id="buyFormBtn" class="btn secondary" type="button">Быстрый заказ</button>
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:14px;align-items:center">
+            <div class="badge"><strong id="stock">Осталось 12</strong><span style="color:var(--muted);font-size:13px;margin-left:6px">шт на складе</span></div>
+            <div style="font-size:13px;color:var(--muted)">Акция закончится через</div>
+            <div id="countdown" class="timer" aria-live="polite" style="font-weight:800;color:#0f172a"></div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;color:var(--muted);font-size:14px">Гарантия: <strong>возврат денег 30 дней</strong> — если не понравится, вернём деньги.</div>
+      </div>
+
+      <!-- Right: product preview -->
+      <aside class="product">
+        <div class="img" aria-hidden="true">
+          <!-- можно заменить картинку тут -->
+          <div style="text-align:center">
+            <svg width="120" height="80" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect rx="12" width="120" height="80" fill="#eef2ff"/>
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="13" fill="#4b5563">Изображение товара</text>
+            </svg>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:800" id="productNameSmall">PRODUCT_NAME</div>
+              <div class="small">Быстрая посылка, надёжная упаковка</div>
+            </div>
+            <div style="text-align:right">
+              <div class="price">PRICE</div>
+              <div class="small">Оплата при получении / карта</div>
+            </div>
+          </div>
+
+          <hr style="margin:14px 0;border:none;border-top:1px solid #eef2ff"/>
+
+          <div style="display:flex;gap:10px;align-items:center;justify-content:space-between">
+            <div>
+              <div class="small">Доставка</div>
+              <div style="font-weight:700">1–3 рабочих дня</div>
+            </div>
+            <div>
+              <div class="small">Гарантия</div>
+              <div style="font-weight:700">30 дней</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <a id="buyWhatsapp2" class="btn" href="#">Купить через WhatsApp</a>
+            <button id="buyFormBtn2" class="btn secondary">Заказать</button>
+          </div>
+
+          <div style="margin-top:12px;font-size:13px;color:var(--muted)">Оплата удобным способом — картой, при получении или через оплату в чате.</div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- О товаре / преимущества -->
+    <section id="about">
+      <div style="display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <h2>Почему именно PRODUCT_NAME?</h2>
+          <p class="small" style="margin-top:6px">Проверенное качество, реальные отзывы и гарантия результата. Простой процесс заказа — один клик и мы свяжемся с вами.</p>
+          <ul style="margin-top:12px;color:#374151">
+            <li>Профессиональное качество</li>
+            <li>Экономия времени и денег</li>
+            <li>Поддержка 24/7</li>
+          </ul>
+        </div>
+        <div style="width:360px">
+          <div class="card">
+            <strong>В подарок</strong>
+            <p class="small" style="margin-top:6px">При заказе сегодня — консультация и скидка на следующую покупку.</p>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <button class="btn" id="giftBtn">Получить подарок</button>
+              <button class="btn secondary" id="moreInfoBtn">Подробнее</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section id="reviews">
+      <h2>Отзывы наших клиентов</h2>
+      <div class="testimonials" style="margin-top:12px">
+        <div class="card">
+          <strong>Алина, Алматы</strong>
+          <p style="margin:8px 0" class="small">«Онлайн Сайт»</p>
+        </div>
+        <div class="card">
+          <strong>Сергей, Нур-Султан</strong>
+          <p style="margin:8px 0" class="small">«Доставка за 2 дня, качество отличное. Спасибо!»</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Быстрая форма покупки -->
+    <section id="buy">
+      <h2>Быстрый заказ</h2>
+      <div class="card" style="margin-top:12px;display:flex;gap:20px;flex-wrap:wrap">
+        <form id="orderForm" style="flex:1;min-width:260px">
+          <label style="display:block;margin-bottom:8px">
+            Ваше имя
+            <input id="buyerName" name="name" required placeholder="Иван" style="width:100%;margin-top:6px;padding:10px;border-radius:8px;border:1px solid #e6edf3"/>
+          </label>
+          <label style="display:block;margin-bottom:8px">
+            Телефон
+            <input id="buyerPhone" name="phone" required placeholder="+7 777 123 45 67" style="width:100%;margin-top:6px;padding:10px;border-radius:8px;border:1px solid #e6edf3"/>
+          </label>
+          <label style="display:block;margin-bottom:8px">
+            Комментарий (необязательно)
+            <textarea id="comment" placeholder="Адрес, удобное время..." style="width:100%;margin-top:6px;padding:10px;border-radius:8px;border:1px solid #e6edf3"></textarea>
+          </label>
+          <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
+            <button type="submit" class="btn">Отправить заказ</button>
+            <div style="color:var(--muted);font-size:13px">Или <a href="#" id="whatsFromForm">купить в WhatsApp</a></div>
+          </div>
+        </form>
+
+        <div style="flex:1;min-width:240px">
+          <div style="font-weight:800">Итого</div>
+          <div style="font-size:22px;margin-top:8px" id="orderSummary">PRODUCT_NAME — PRICE</div>
+          <div style="color:var(--muted);margin-top:10px">Оплата при получении, картой или переводом.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="max-width:800px;margin:0 auto">
+        <p>© <span id="year"></span> SHOP_NAME — Все права защищены. Политика возврата и условия обслуживания доступны по запросу.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Стикер покупки (мобильный) -->
+  <div class="sticky-buy" id="stickyBuy" aria-hidden="true">
+    <div class="left">
+      <div style="font-weight:800">PRICE</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.9)">PRODUCT</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button id="stickyWhats" aria-label="Купить по WhatsApp">Купить</button>
+    </div>
+  </div>
+
+  <!-- Модальное окно (простое уведомление) -->
+  <div id="modal" style="display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:rgba(2,6,23,0.5);z-index:100">
+    <div style="background:#fff;padding:20px;border-radius:12px;max-width:480px;width:94%">
+      <h3 id="modalTitle">Спасибо — заказ принят</h3>
+      <p id="modalBody">Мы свяжемся с вами в ближайшее время для подтверждения заказа. Если хотите — откройте чат в WhatsApp и отправьте сообщение.</p>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button id="modalClose" class="btn secondary">Закрыть</button>
+        <a id="modalWhats" class="btn" href="#" target="_blank">Открыть WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ========== Конфигурация (замените значения) ========== */
+    const config = {
+      shopName: "Онлайн Сайт",          // Замените на своё название магазина
+      productName: "Онлайн Сайт",    // Название товара/услуги
+      priceText: "PRICE",             // Цена (например "11 990 ₸" или "₸ 11 990")
+      whatsappNumber: "WHATSAPP номер", // Телефон в международном формате без +: 77001234567 или 77771234567
+      initialStock: 12,               // сколько штук показывать в остатке
+      saleEndsInHours: 36,            // через сколько часов закончится акция
+      prefilledMsg: "Здравствуйте! Хочу купить PRODUCT. Имя: {name}. Телефон: {phone}. Адрес: {comment}" // шаблон сообщения
+    };
+
+    /* ========== Начальная инициализация UI ========== */
+    document.getElementById('year').innerText = new Date().getFullYear();
+    document.title = `${config.shopName} — Купить ${config.productName}`;
+    document.getElementById('title').innerText = `${config.productName} — Лучшее решение для вас`;
+    document.getElementById('subtitle').innerText = `Купите ${config.productName} сейчас — быстрая доставка и гарантия возврата 30 дней.`;
+    document.getElementById('price').innerText = config.priceText;
+    document.getElementById('productNameSmall').innerText = config.productName;
+    document.querySelectorAll('#orderSummary, .price').forEach(el => {
+      if (el.id === 'orderSummary') el.innerText = `${config.productName} — ${config.priceText}`;
+      else el.innerText = config.priceText;
+    });
+    document.querySelectorAll('text').forEach(t => {}); // noop
+
+    // Заменяем в логотипе текст, если нужно (svg встроен как картинка текста, менять вручную в html если требуется)
+
+    // Кнопки WhatsApp собирают сообщение
+    function buildWhatsAppUrl({name, phone, comment}) {
+      const raw = config.prefilledMsg
+        .replace(/PRODUCT_NAME/g, config.productName)
+        .replace(/\{name\}/g, name || '')
+        .replace(/\{phone\}/g, phone || '')
+        .replace(/\{comment\}/g, comment || '');
+      const encoded = encodeURIComponent(raw);
+      return `https://wa.me/${config.whatsappNumber}?text=${encoded}`;
+    }
+
+    // При клике на кнопки "Купить через WhatsApp"
+    document.querySelectorAll('#buyWhatsapp, #buyWhatsapp2, #stickyWhats').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        // откроем чат с предзаполненным сообщением (пользователь донаберёт имя/телефон)
+        const url = buildWhatsAppUrl({name:'',phone:'',comment:''});
+        window.open(url, '_blank');
+      });
+    });
+
+    // Форма "быстрый заказ"
+    const orderForm = document.getElementById('orderForm');
+    orderForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('buyerName').value.trim();
+      const phone = document.getElementById('buyerPhone').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      if (!name || !phone) {
+        alert('Пожалуйста, укажите имя и телефон.');
+        return;
+      }
+      // показываем модалку-подтверждение и предлагаем перейти в WhatsApp
+      const wa = buildWhatsAppUrl({name,phone,comment});
+      document.getElementById('modal').style.display = 'flex';
+      document.getElementById('modalWhats').href = wa;
+      document.getElementById('modalTitle').innerText = 'Спасибо! Заказ получен';
+      document.getElementById('modalBody').innerText = `В ближайшее время мы свяжемся с вами по телефону ${phone} для подтверждения. Вы также можете написать в WhatsApp, чтобы ускорить обработку.`;
+      // здесь вы могли бы отправить данные на сервер (fetch), но этот пример - локальный
+      decrementStock();
+    });
+
+    // Связать "купить" из формы с WhatsApp
+    document.getElementById('whatsFromForm').addEventListener('click', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('buyerName').value.trim() || '';
+      const phone = document.getElementById('buyerPhone').value.trim() || '';
+      const comment = document.getElementById('comment').value.trim() || '';
+      window.open(buildWhatsAppUrl({name,phone,comment}), '_blank');
+    });
+
+    // Закрыть модалку
+    document.getElementById('modalClose').addEventListener('click', function () {
+      document.getElementById('modal').style.display = 'none';
+    });
+
+    // Быстрые кнопки
+    document.getElementById('buyFormBtn').addEventListener('click', () => document.getElementById('buyerName').focus());
+    document.getElementById('buyFormBtn2').addEventListener('click', () => document.getElementById('buyerName').focus());
+    document.getElementById('giftBtn').addEventListener('click', () => {
+      alert('Подарок добавлен. При оформлении заказа напишите в комментарии «Хочу подарок»');
+    });
+    document.getElementById('moreInfoBtn').addEventListener('click', () => {
+      window.location.hash = '#about';
+    });
+
+    // Отображение и уменьшение остатка (имитация срочности)
+    let stock = Math.max(0, config.initialStock);
+    const stockEl = document.getElementById('stock');
+    function updateStock() {
+      stockEl.innerText = `Осталось ${stock}`;
+      if (stock <= 0) {
+        document.querySelectorAll('.btn').forEach(b => { b.disabled = true; b.style.opacity = 0.6; });
+        stockEl.innerText = 'Распродано';
+      }
+    }
+    updateStock();
+    function decrementStock() {
+      if (stock > 0) {
+        stock -= 1;
+        updateStock();
+      }
+    }
+    // периодически уменьшаем остаток случайно, чтобы создать эффект спроса (каждые 18-45с)
+    setInterval(() => {
+      if (stock <= 0) return;
+      if (Math.random() < 0.45) return; // не всегда убираем
+      decrementStock();
+    }, 30000 + Math.random()*15000);
+
+    // Таймер обратного отсчёта
+    const countdownEl = document.getElementById('countdown');
+    const endsAt = Date.now() + config.saleEndsInHours * 3600 * 1000;
+    function updateCountdown() {
+      const diff = endsAt - Date.now();
+      if (diff <= 0) {
+        countdownEl.innerText = '00:00:00';
+        return;
+      }
+      const h = Math.floor(diff/1000/3600);
+      const m = Math.floor((diff/1000%3600)/60);
+      const s = Math.floor((diff/1000)%60);
+      function pad(n){return String(n).padStart(2,'0')}
+      countdownEl.innerText = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Sticky buy (показывать на мобильных)
+    function checkSticky(){
+      const w = window.innerWidth;
+      const el = document.getElementById('stickyBuy');
+      if (w <= 980 && stock > 0) {
+        el.style.display = 'flex';
+        el.setAttribute('aria-hidden','false');
+      } else {
+        el.style.display = 'none';
+        el.setAttribute('aria-hidden','true');
+      }
+    }
+    checkSticky();
+    window.addEventListener('resize', checkSticky);
+    document.getElementById('stickyWhats').addEventListener('click', () => {
+      window.open(buildWhatsAppUrl({name:'',phone:'',comment:''}), '_blank');
+    });
+
+    // Подменяем текст PRICE/PRODUCT_NAME в sticky
+    document.querySelectorAll('.sticky-buy .left .price'); // noop
+    document.querySelectorAll('.sticky-buy, .sticky-buy .left').forEach(()=>{});
+    // Подставим текущие значения в sticky (если он есть)
+    const stickyBuy = document.getElementById('stickyBuy');
+    if (stickyBuy) {
+      stickyBuy.querySelector('.left div')?.remove?.(); // safe
+      // добавим через innerHTML
+      stickyBuy.querySelector('.left').innerHTML = `<div style="font-weight:800">${config.priceText}</div><div style="font-size:13px;color:rgba(255,255,255,0.9)">${config.productName}</div>`;
+    }
+
+    // Если нужно — сохраняем и восстанавливаем остаток в localStorage (чтобы при перезагрузке закончилось)
+    try {
+      const key = 'shop_stock_' + (config.productName || 'default').replace(/\s+/g,'_');
+      const saved = parseInt(localStorage.getItem(key));
+      if (!isNaN(saved)) stock = saved;
+      updateStock();
+      setInterval(()=> localStorage.setItem(key, stock), 2000);
+    } catch (e) { /* ignore */ }
+
+    // Accessibility: focus trap not implemented (простая версия)
+    // Конец инициализации
+  </script>
+</body>
+</html>
